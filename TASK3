@@ -1,0 +1,35 @@
+import nltk
+import random
+import string
+from nltk.chat.util import Chat, reflections
+patterns_responses = [
+    (r"hi|hello|hey", ["Hello! How can I assist you today?", "Hi! How can I help you?"]),
+    (r"how are you?", ["I'm doing great, thank you for asking!", "I'm just a bot, but I'm doing well!"]),
+    (r"what is your name?", ["I am a chatbot created to help you with your queries.", "You can call me Chatbot!"]),
+    (r"what is (.*)", ["You asked about {0}. Let me check for more details."]),
+    (r"how (.*) work", ["Let me explain how {0} works."]),
+    (r"bye|goodbye", ["Goodbye! Have a great day!", "Bye! Feel free to reach out anytime."]),
+    (r"(.*) help (.*)", ["I can help you with anything! Please tell me your problem.", "How can I assist you with {0}?"]),
+    (r"(.*) (your|my) (.*)", ["I'm not sure about that. Could you clarify?", "Could you tell me more about what you're asking?"]),
+    (r"quit|exit", ["Goodbye! Have a great day.", "Bye for now!"]),
+]
+
+chatbot = Chat(patterns_responses, reflections)
+
+def start_chat():
+    print("Hello! I'm here to help you. Type 'quit' or 'exit' to end the conversation.")
+    while True:
+        user_input = input("You: ")
+        
+        if user_input.lower() in ['quit', 'exit']:
+            print("Chatbot: Goodbye! Have a great day.")
+            break
+        
+        response = chatbot.respond(user_input)
+        if response:
+            print("Chatbot:", response)
+        else:
+            print("Chatbot: I'm sorry, I didn't understand that.")
+
+if __name__ == "__main__":
+    start_chat()
